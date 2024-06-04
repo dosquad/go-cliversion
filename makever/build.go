@@ -1,14 +1,12 @@
 package makever
 
-import "strings"
-
 type Option func() string
 
-func LDFlags(items ...Option) string {
-	sb := []string{}
+func LDFlags(items ...Option) []string {
+	out := []string{}
 	for _, item := range items {
-		sb = append(sb, item())
+		out = append(out, item())
 	}
 
-	return strings.Join(sb, " ")
+	return out
 }
