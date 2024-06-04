@@ -1,11 +1,35 @@
 package cliversion
 
 import (
+	"time"
+
 	"google.golang.org/protobuf/encoding/protojson"
 )
 
 func (v *VersionInfo) JSON() ([]byte, error) {
 	return protojson.Marshal(v)
+}
+
+func (v *VersionInfo) VersionString() string {
+	if b := v.GetBuild(); b != nil {
+		if g := v.GetGit(); g != nil {
+			return b.GetVersion() + " [" +
+				g.GetCommit() + "] (" +
+				b.GetDate().AsTime().Format(time.RFC3339) + ") <" +
+				b.GetMethod() + "> <" + g.GetRepo() + ">"
+		}
+
+		return b.GetVersion() + " [] (" +
+			b.GetDate().AsTime().Format(time.RFC3339) + ") <" +
+			b.GetMethod() + "> <>"
+	}
+
+	if g := v.GetGit(); g != nil {
+		return g.GetTag() + " [" +
+			g.GetCommit() + "] () <> <" + g.GetRepo() + ">"
+	}
+
+	return "v0.0.0+unknown [] () <> <>"
 }
 
 // import "time"
