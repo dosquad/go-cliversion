@@ -2,6 +2,8 @@ module github.com/dosquad/go-cliversion/magefiles
 
 go 1.22.3
 
+replace github.com/dosquad/mage => /Users/kosh/grit/github.com/dosquad/mage
+
 require (
 	github.com/VividCortex/ewma v1.1.1 // indirect
 	github.com/cheggaaa/pb/v3 v3.0.4 // indirect

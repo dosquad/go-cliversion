@@ -1,14 +1,17 @@
-package version
+package cliversion
 
-type Version struct {
+import "time"
+
+type VersionInfo struct {
 	Build BuildInfo `json:"build,omitempty" yaml:"build,omitempty"`
 	Git   GitInfo   `json:"git,omitempty" yaml:"git,omitempty"`
 }
 
 type BuildInfo struct {
-	Debug  bool   `json:"debug,omitempty" yaml:"debug,omitempty"`
-	Method string `json:"method,omitempty" yaml:"method,omitempty"`
-	Date   Time   `json:"date,omitempty" yaml:"date,omitempty"`
+	Debug   bool      `json:"debug,omitempty" yaml:"debug,omitempty"`
+	Method  string    `json:"method,omitempty" yaml:"method,omitempty"`
+	Date    time.Time `json:"date,omitempty" yaml:"date,omitempty"`
+	Version string    `json:"version,omitempty" yaml:"version,omitempty"`
 }
 
 type GitInfo struct {
