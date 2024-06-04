@@ -21,6 +21,7 @@ require github.com/dosquad/go-cliversion v0.0.0-00010101000000-000000000000
 const codeTemplate = `package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"os"
 
@@ -28,11 +29,18 @@ import (
 )
 
 func main() {
+	buf, err := version.Get().JSON()
+	if err != nil {
+		panic(err)
+	}
+
+	out := map[string]interface{}{}
+	_ = json.NewDecoder(bytes.NewReader(buf)).Decode(&out)
+
 	enc := json.NewEncoder(os.Stdout)
 	enc.SetIndent("", "    ")
-	_ = enc.Encode(version.Get())
-}
-`
+	_ = enc.Encode(out)
+}`
 
 func readTestData(name string) string {
 	if out, err := os.ReadFile("testdata/" + name); err == nil {
@@ -88,6 +96,16 @@ func buildTestBinary(args []string) (string, error) {
 	}
 
 	defer func() { _ = os.RemoveAll(tempPath) }()
+
+	{
+		// go mod tidy in test source directory
+		cmd := exec.Command("go", "mod", "tidy")
+		cmd.Dir = tempPath
+
+		if err := cmd.Run(); err != nil {
+			return "", fmt.Errorf("unable to go run command [%s](%s): %w", cmd.Dir, cmd.Args, err)
+		}
+	}
 
 	buf := &strings.Builder{}
 	// targetFile := filepath.Join(tempPath, "main")

@@ -13,6 +13,8 @@ import (
 
 // Install update, protoc, format, tidy, lint & test.
 func Install(ctx context.Context) {
+	mg.CtxDeps(ctx, mage.Protobuf.GenGo)
+	// mg.CtxDeps(ctx, mage.Protobuf.GenGoGRPC)
 	mg.CtxDeps(ctx, mage.Golang.Lint)
 	mg.CtxDeps(ctx, mage.Golang.Test)
 }

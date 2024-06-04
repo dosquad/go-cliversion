@@ -30,6 +30,12 @@ func BuildVersion(in string) Option {
 		in,
 	)
 }
+func BuildGoVersion(in string) Option {
+	return retfunc(
+		"github.com/dosquad/go-cliversion.BuildGoVersion",
+		in,
+	)
+}
 
 func GitRepo(in string) Option {
 	return retfunc(

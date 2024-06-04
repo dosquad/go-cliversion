@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package dosquad.cliversion;
+option go_package = "github.com/dosquad/go-cliversion;cliversion";
+
+import "google/protobuf/timestamp.proto";
+
+message VersionInfo {
+	BuildInfo build = 1 [json_name = "build"];
+	GitInfo git = 2 [json_name = "git"];
+}
+
+message BuildInfo {
+	bool debug = 1 [json_name = "debug"];
+	string method = 2 [json_name = "method"];
+	google.protobuf.Timestamp date = 3 [json_name = "date"];
+	string version = 4 [json_name = "version"];
+	string go_version = 5 [json_name = "go_version"];
+}
+
+message GitInfo {
+	string repo = 1 [json_name = "repo"];
+	string slug = 2 [json_name = "slug"];
+	string commit = 3 [json_name = "commit"];
+	string tag = 4 [json_name = "tag"];
+	string exact_tag = 5 [json_name = "exact_tag"];
+}

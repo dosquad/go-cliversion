@@ -50,9 +50,6 @@ func TestBuildVersion(t *testing.T) {
 			if diff := cmp.Diff(blankVersion, tt.expect); diff != "" {
 				t.Errorf("JSON: version display -got +want:\n%s", diff)
 			}
-			// if !strings.EqualFold(blankVersion, tt.expect) {
-			// 	t.Errorf("Output: got '%s', want '%s'", blankVersion, tt.expect)
-			// }
 		})
 	}
 }
