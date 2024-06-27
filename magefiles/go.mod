@@ -1,6 +1,8 @@
 module github.com/dosquad/go-cliversion/magefiles
 
-go 1.22.3
+go 1.22.2
+
+toolchain go1.22.2
 
 require (
 	github.com/VividCortex/ewma v1.1.1 // indirect
