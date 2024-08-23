@@ -32,25 +32,23 @@ func (v *VersionInfo) VersionString() string {
 	return "v0.0.0+unknown [] () <> <>"
 }
 
-// import "time"
+var versionHeaderMap = map[string]any{
+	"BuildInfo": map[string]any{
+		"Debug":     "Debug",
+		"Method":    "Method",
+		"Date":      "Date",
+		"Version":   "Version",
+		"GoVersion": "Go Version",
+	},
+	"GitInfo": map[string]any{
+		"Repo":     "Repository",
+		"Slug":     "Repo Slug",
+		"Commit":   "Commit",
+		"Tag":      "Tag",
+		"ExactTag": "Exact Tag",
+	},
+}
 
-// type VersionInfo struct {
-// 	Build BuildInfo `json:"build,omitempty" yaml:"build,omitempty"`
-// 	Git   GitInfo   `json:"git,omitempty" yaml:"git,omitempty"`
-// }
-
-// type BuildInfo struct {
-// 	Debug     bool      `json:"debug,omitempty" yaml:"debug,omitempty"`
-// 	Method    string    `json:"method,omitempty" yaml:"method,omitempty"`
-// 	Date      time.Time `json:"date,omitempty" yaml:"date,omitempty"`
-// 	Version   string    `json:"version,omitempty" yaml:"version,omitempty"`
-// 	GoVersion string    `json:"go-version,omitempty" yaml:"go-version,omitempty"`
-// }
-
-// type GitInfo struct {
-// 	Repo     string `json:"repo,omitempty" yaml:"repo,omitempty"`
-// 	Slug     string `json:"slug,omitempty" yaml:"slug,omitempty"`
-// 	Commit   string `json:"commit,omitempty" yaml:"commit,omitempty"`
-// 	Tag      string `json:"tag,omitempty" yaml:"tag,omitempty"`
-// 	ExactTag string `json:"exact-tag,omitempty" yaml:"exact-tag,omitempty"`
-// }
+func VersionHeaderMap() map[string]any {
+	return versionHeaderMap
+}

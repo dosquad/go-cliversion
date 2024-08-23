@@ -34,7 +34,7 @@ func main() {
 		panic(err)
 	}
 
-	out := map[string]interface{}{}
+	out := map[string]any{}
 	_ = json.NewDecoder(bytes.NewReader(buf)).Decode(&out)
 
 	enc := json.NewEncoder(os.Stdout)
