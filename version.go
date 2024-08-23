@@ -33,14 +33,14 @@ func (v *VersionInfo) VersionString() string {
 }
 
 var versionHeaderMap = map[string]any{
-	"BuildInfo": map[string]any{
+	"Build": map[string]any{
 		"Debug":     "Debug",
 		"Method":    "Method",
 		"Date":      "Date",
 		"Version":   "Version",
 		"GoVersion": "Go Version",
 	},
-	"GitInfo": map[string]any{
+	"Git": map[string]any{
 		"Repo":     "Repository",
 		"Slug":     "Repo Slug",
 		"Commit":   "Commit",
