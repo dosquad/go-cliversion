@@ -82,7 +82,7 @@ func buildTestBinary(args []string) (string, error) {
 	if err := os.WriteFile(
 		filepath.Join(tempPath, "main.go"),
 		[]byte(codeTemplate),
-		0o0666,
+		0o0600,
 	); err != nil {
 		return "", fmt.Errorf("unable to write temp source file: %w", err)
 	}
@@ -90,7 +90,7 @@ func buildTestBinary(args []string) (string, error) {
 	if err := os.WriteFile(
 		filepath.Join(tempPath, "go.mod"),
 		[]byte(fmt.Sprintf(gomodTemplate, workDir())),
-		0o0666,
+		0o0600,
 	); err != nil {
 		return "", fmt.Errorf("unable to write temp go.mod: %w", err)
 	}

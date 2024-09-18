@@ -7,4 +7,3 @@ jobs:
   dependabot:
     name: "Dependabot"
     uses: dosquad/actions/.github/workflows/dependabot-automerge.yml@main
-    secrets: inherit

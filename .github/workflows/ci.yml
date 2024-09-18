@@ -2,6 +2,8 @@ name: CI
 
 on:
   push:
+    branches:
+      - 'main'
   pull_request:
   workflow_dispatch:
 
@@ -9,4 +11,3 @@ jobs:
   unit-test:
     name: "Unit Test"
     uses: dosquad/actions/.github/workflows/unit-test.yml@main
-    secrets: inherit

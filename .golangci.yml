@@ -1,7 +1,7 @@
 # This code is licensed under the terms of the MIT license https://opensource.org/license/mit
 # Copyright (c) 2021 Marat Reymers
 
-## Golden config for golangci-lint v1.60.2
+## Golden config for golangci-lint v1.60.3
 #
 # This is the best config for golangci-lint based on my experience and opinion.
 # It is very strict, but not extremely strict.
@@ -325,42 +325,7 @@ issues:
   # Default: 3
   max-same-issues: 50
   exclude-rules:
-    - source: "(noinspection|TODO)"
-      linters: [godot]
-    - source: "//noinspection"
-      linters: [gocritic]
-    - path: "_test\\.go"
-      linters:
-        - bodyclose
-        - dupl
-        - funlen
-        - goconst
-        - gosec
-        - noctx
-        - wrapcheck
-    - linters: [staticcheck]
-      text: "options.AndFrom is deprecated"
-    - linters: [staticcheck]
-      text: "The component config package has been deprecated and will be removed in a future release."
-    - path: "cmd/"
+    - path: '(const|version).go'
       linters:
         - gochecknoinits
-        - gochecknoglobals
-    # Exclude `lll` issues for long lines with `go:generate`.
-    - linters:
-        - lll
-      source: '^//\s*\+kubebuilder:'
-    - linters:
-        - godot
-      source: '^//\s*\+optional'
-    - path: "api/v1/"
-      linters:
-        - gochecknoinits
-    # Allow dot imports for ginkgo and gomega
-    - source: ginkgo|gomega
-      linters:
-        - revive
-      text: "should not use dot imports"
-    - path: "."
-      linters:
         - gochecknoglobals
