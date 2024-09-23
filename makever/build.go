@@ -1,7 +1,6 @@
 package makever
 
-type Option func() string
-
+// LDFlags produces an -ldflags compatible output made up from specified input Option functions.
 func LDFlags(items ...Option) []string {
 	out := []string{}
 	for _, item := range items {

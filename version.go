@@ -6,10 +6,12 @@ import (
 	"google.golang.org/protobuf/encoding/protojson"
 )
 
+// JSON returns the VersionInfo formatted into JSON format.
 func (v *VersionInfo) JSON() ([]byte, error) {
 	return protojson.Marshal(v)
 }
 
+// VersionString returns the version as a string, compatible with display in a cli tool.
 func (v *VersionInfo) VersionString() string {
 	if b := v.GetBuild(); b != nil {
 		if g := v.GetGit(); g != nil {
@@ -32,6 +34,7 @@ func (v *VersionInfo) VersionString() string {
 	return "v0.0.0+unknown [] () <> <>"
 }
 
+// single-allocation for the version properties (for use with headers in displaying lists).
 var versionHeaderMap = map[string]any{
 	"Build": map[string]any{
 		"Debug":     "Debug",
@@ -49,6 +52,7 @@ var versionHeaderMap = map[string]any{
 	},
 }
 
+// VersionHeaderMap returns the versionHeaderMap.
 func VersionHeaderMap() map[string]any {
 	return versionHeaderMap
 }
