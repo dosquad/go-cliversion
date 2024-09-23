@@ -53,6 +53,7 @@ func stringToTime(in string) *timestamppb.Timestamp {
 	return timestamppb.New(time.Time{})
 }
 
+// Get returns the variables set at compile time.
 func Get() *VersionInfo {
 	return &VersionInfo{
 		Build: &BuildInfo{

@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// Time wraps time.Time to change the method of marshalling and unmarshalling Time.
 type Time struct {
 	time.Time
 }

@@ -5,6 +5,8 @@ import (
 	"time"
 )
 
+// SlogAttr returns a slog.Group consisting of the relevant parts of a VersionInfo to
+// add to a slog message for starting an application.
 func (v *VersionInfo) SlogAttr(name string) slog.Attr {
 	return slog.Group(name,
 		slog.String("version", v.GetBuild().GetVersion()),
