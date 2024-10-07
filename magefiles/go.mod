@@ -5,7 +5,7 @@ go 1.22.3
 toolchain go1.23.0
 
 require (
-	github.com/dosquad/mage v0.1.31
+	github.com/dosquad/mage v0.1.32
 	github.com/magefile/mage v1.15.0
 )
 
