@@ -6,6 +6,8 @@ import (
 )
 
 // Time wraps time.Time to change the method of marshalling and unmarshalling Time.
+//
+//nolint:recvcheck // Marshal and Unmarshal methods.
 type Time struct {
 	time.Time
 }

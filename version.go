@@ -6,6 +6,15 @@ import (
 	"google.golang.org/protobuf/encoding/protojson"
 )
 
+// GetBuild is the pre-protobuf editions compatibility.
+//
+// Deprecated: GetBuild exists for historical compatibility
+// and should not be used. To access the the BuildInfo use
+// GetBld instead.
+func (v *VersionInfo) GetBuild() *BuildInfo {
+	return v.GetBld()
+}
+
 // JSON returns the VersionInfo formatted into JSON format.
 func (v *VersionInfo) JSON() ([]byte, error) {
 	return protojson.Marshal(v)
