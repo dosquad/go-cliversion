@@ -22,18 +22,30 @@ var (
 	GitExactTag string
 )
 
-func stringToBool(in string) bool {
+func stringToBool(in string) *bool {
 	for _, v := range []string{
 		"true", "t",
 		"yes", "y",
 		"1", "on",
 	} {
 		if strings.EqualFold(in, v) {
-			return true
+			b := true
+			return &b
 		}
 	}
 
-	return false
+	for _, v := range []string{
+		"false", "f",
+		"no", "n",
+		"0", "off",
+	} {
+		if strings.EqualFold(in, v) {
+			b := false
+			return &b
+		}
+	}
+
+	return nil
 }
 
 func stringToTime(in string) *timestamppb.Timestamp {
@@ -53,22 +65,30 @@ func stringToTime(in string) *timestamppb.Timestamp {
 	return timestamppb.New(time.Time{})
 }
 
+func stringToPtr(in string) *string {
+	if in != "" {
+		return &in
+	}
+
+	return nil
+}
+
 // Get returns the variables set at compile time.
 func Get() *VersionInfo {
-	return &VersionInfo{
-		Build: &BuildInfo{
+	return VersionInfo_builder{
+		Bld: BuildInfo_builder{
 			Date:      stringToTime(BuildDate),
 			Debug:     stringToBool(BuildDebug),
-			Method:    BuildMethod,
-			Version:   BuildVersion,
-			GoVersion: BuildGoVersion,
-		},
-		Git: &GitInfo{
-			Repo:     GitRepo,
-			Slug:     GitSlug,
-			Commit:   GitCommit,
-			Tag:      GitTag,
-			ExactTag: GitExactTag,
-		},
-	}
+			Method:    stringToPtr(BuildMethod),
+			Version:   stringToPtr(BuildVersion),
+			GoVersion: stringToPtr(BuildGoVersion),
+		}.Build(),
+		Git: GitInfo_builder{
+			Repo:     stringToPtr(GitRepo),
+			Slug:     stringToPtr(GitSlug),
+			Commit:   stringToPtr(GitCommit),
+			Tag:      stringToPtr(GitTag),
+			ExactTag: stringToPtr(GitExactTag),
+		}.Build(),
+	}.Build()
 }

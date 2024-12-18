@@ -1,60 +1,52 @@
 package cliversion
 
-// message BuildInfo {
-// 	bool debug = 1 [json_name = "debug"];
-// 	string method = 2 [json_name = "method"];
-// 	google.protobuf.Timestamp date = 3 [json_name = "date"];
-// 	string version = 4 [json_name = "version"];
-// 	string go_version = 5 [json_name = "go_version"];
-// }
-
-// GetBuildDebug returns the versionInfo.GetBuild().GetDebug() if versionInfo.GetBuild() is not nil,
+// GetBuildDebug returns the versionInfo.GetBld().GetDebug() if versionInfo.GetBld() is not nil,
 // otherwise it returns true.
 func GetBuildDebug(versionInfo *VersionInfo) bool {
-	if versionInfo.GetBuild() != nil {
-		return versionInfo.GetBuild().GetDebug()
+	if versionInfo.HasBld() {
+		return versionInfo.GetBld().GetDebug()
 	}
 
 	return true
 }
 
-// GetBuildMethod returns the versionInfo.GetBuild().GetMethod() if versionInfo.GetBuild() is not nil,
+// GetBuildMethod returns the versionInfo.GetBld().GetMethod() if versionInfo.GetBld() is not nil,
 // otherwise it returns "not-set".
 func GetBuildMethod(versionInfo *VersionInfo) string {
-	if versionInfo.GetBuild() != nil {
-		return versionInfo.GetBuild().GetMethod()
+	if versionInfo.HasBld() {
+		return versionInfo.GetBld().GetMethod()
 	}
 
 	return "not-set"
 }
 
-// GetBuildDate returns the versionInfo.GetBuild().GetDate().AsTime().Format(timeLayout)
-// if versionInfo.GetBuild() is not nil, otherwise it returns an empty string.
+// GetBuildDate returns the versionInfo.GetBld().GetDate().AsTime().Format(timeLayout)
+// if versionInfo.GetBld() is not nil, otherwise it returns an empty string.
 func GetBuildDate(versionInfo *VersionInfo, timeLayout string) string {
-	if versionInfo.GetBuild() != nil {
-		if versionInfo.GetBuild().GetDate() != nil {
-			return versionInfo.GetBuild().GetDate().AsTime().Format(timeLayout)
+	if versionInfo.HasBld() {
+		if versionInfo.GetBld().GetDate() != nil {
+			return versionInfo.GetBld().GetDate().AsTime().Format(timeLayout)
 		}
 	}
 
 	return ""
 }
 
-// GetBuildVersion returns the versionInfo.GetBuild().GetVersion()
-// if versionInfo.GetBuild() is not nil, otherwise it returns an empty string.
+// GetBuildVersion returns the versionInfo.GetBld().GetVersion()
+// if versionInfo.GetBld() is not nil, otherwise it returns an empty string.
 func GetBuildVersion(versionInfo *VersionInfo) string {
-	if versionInfo.GetBuild() != nil {
-		return versionInfo.GetBuild().GetVersion()
+	if versionInfo.HasBld() {
+		return versionInfo.GetBld().GetVersion()
 	}
 
 	return ""
 }
 
-// GetBuildGoVersion returns the versionInfo.GetBuild().GetGoVersion()
-// if versionInfo.GetBuild() is not nil, otherwise it returns an empty string.
+// GetBuildGoVersion returns the versionInfo.GetBld().GetGoVersion()
+// if versionInfo.GetBld() is not nil, otherwise it returns an empty string.
 func GetBuildGoVersion(versionInfo *VersionInfo) string {
-	if versionInfo.GetBuild() != nil {
-		return versionInfo.GetBuild().GetGoVersion()
+	if versionInfo.HasBld() {
+		return versionInfo.GetBld().GetGoVersion()
 	}
 
 	return ""

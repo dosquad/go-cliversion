@@ -13,7 +13,7 @@ func (v *VersionInfo) JSON() ([]byte, error) {
 
 // VersionString returns the version as a string, compatible with display in a cli tool.
 func (v *VersionInfo) VersionString() string {
-	if b := v.GetBuild(); b != nil {
+	if b := v.GetBld(); b != nil {
 		if g := v.GetGit(); g != nil {
 			return b.GetVersion() + " [" +
 				g.GetCommit() + "] (" +

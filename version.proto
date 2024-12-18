@@ -1,12 +1,15 @@
-syntax = "proto3";
+edition = "2023";
 
 package dosquad.cliversion;
 option go_package = "github.com/dosquad/go-cliversion;cliversion";
 
+import "google/protobuf/go_features.proto";
+option features.(pb.go).api_level = API_OPAQUE;
+
 import "google/protobuf/timestamp.proto";
 
 message VersionInfo {
-	BuildInfo build = 1 [json_name = "build"];
+	BuildInfo bld = 1 [json_name = "build"];
 	GitInfo git = 2 [json_name = "git"];
 }
 

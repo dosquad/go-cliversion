@@ -9,10 +9,10 @@ import (
 // add to a slog message for starting an application.
 func (v *VersionInfo) SlogAttr(name string) slog.Attr {
 	return slog.Group(name,
-		slog.String("version", v.GetBuild().GetVersion()),
-		slog.String("date", v.GetBuild().GetDate().AsTime().Format(time.RFC3339)),
+		slog.String("version", v.GetBld().GetVersion()),
+		slog.String("date", v.GetBld().GetDate().AsTime().Format(time.RFC3339)),
 		slog.String("commit", v.GetGit().GetCommit()),
-		slog.String("built_by", v.GetBuild().GetMethod()),
+		slog.String("built_by", v.GetBld().GetMethod()),
 		slog.String("repo", v.GetGit().GetRepo()),
 	)
 }
