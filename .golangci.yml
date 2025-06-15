@@ -12,27 +12,27 @@
 # Stored at https://raw.githubusercontent.com/dosquad/mage/refs/heads/main/.golangci.yml
 # Modified for na4ma4 repositories.
 #
+
 version: "2"
+
 issues:
   # Maximum count of issues with the same text.
   # Set to 0 to disable.
   # Default: 3
   max-same-issues: 50
-  exclude-rules:
-    - path: '(const|version).go'
-      linters:
-        - gochecknoinits
-        - gochecknoglobals
+
 formatters:
   enable:
     - goimports # checks if the code and import statements are formatted according to the 'goimports' command
     - golines # checks if code is formatted, and fixes long lines
+
     ## you may want to enable
     #- gci # checks if code and import statements are formatted, with additional rules
     #- gofmt # checks if the code is formatted according to 'gofmt' command
 
     ## disabled
     #- gofumpt # [replaced by goimports, gofumports is not available yet] checks if code and import statements are formatted, with additional rules
+
   # All settings can be found here https://github.com/golangci/golangci-lint/blob/HEAD/.golangci.reference.yml
   settings:
     goimports:
@@ -41,10 +41,12 @@ formatters:
       # Default: []
       local-prefixes:
         - github.com/my/project
+
     golines:
       # Target maximum line length.
       # Default: 100
       max-len: 120
+
 linters:
   enable:
     - asasalint # checks for pass []any as any in variadic func(...any)
@@ -119,6 +121,7 @@ linters:
     - usetesting # reports uses of functions with replacement inside the testing package
     - wastedassign # finds wasted assignment statements
     - whitespace # detects leading and trailing whitespace
+
     ## you may want to enable
     - decorder # checks declaration order and count of types, constants, variables and functions
     #- exhaustruct # [highly recommend to enable] checks if all structure fields are initialized
@@ -154,6 +157,7 @@ linters:
     #- tagliatelle # checks the struct tags
     - thelper # detects golang test helpers without t.Helper() call and checks the consistency of test helpers
     #- wsl # [too strict and mostly code is not more readable] whitespace linter forces you to use empty lines
+
   # All settings can be found here https://github.com/golangci/golangci-lint/blob/HEAD/.golangci.reference.yml
   settings:
     cyclop:
@@ -164,6 +168,7 @@ linters:
       # If it's higher than 0.0 (float) the check is enabled.
       # Default: 0.0
       package-average: 10.0
+
     depguard:
       # Rules to apply.
       #
@@ -211,6 +216,7 @@ linters:
           deny:
             - pkg: log$
               desc: Use log/slog instead, see https://go.dev/blog/slog
+
     errcheck:
       # Report about not checking of errors in type assertions: `a := b.(MyStruct)`.
       # Such cases aren't reported by default.
@@ -220,12 +226,14 @@ linters:
       # See https://github.com/kisielk/errcheck#excluding-functions for details.
       exclude-functions:
         - (*go.uber.org/zap.Logger).Sync
+
     exhaustive:
       # Program elements to check for exhaustiveness.
       # Default: [ switch ]
       check:
         - switch
         - map
+
     exhaustruct:
       # List of regular expressions to exclude struct packages and their names from checks.
       # Regular expressions must match complete canonical struct package/name/structname.
@@ -254,10 +262,12 @@ linters:
         - ^golang.org/x/tools/go/analysis.Analyzer$
         - ^google.golang.org/protobuf/.+Options$
         - ^gopkg.in/yaml.v3.Node$
+
     funcorder:
       # Checks if the exported methods of a structure are placed before the non-exported ones.
       # Default: true
       struct-method: false
+
     funlen:
       # Checks the number of lines in a function.
       # If lower than 0, disable the check.
@@ -267,14 +277,17 @@ linters:
       # If lower than 0, disable the check.
       # Default: 40
       statements: 50
+
     gochecksumtype:
       # Presence of `default` case in switch statements satisfies exhaustiveness, if all members are not listed.
       # Default: true
       default-signifies-exhaustive: false
+
     gocognit:
       # Minimal code complexity to report.
       # Default: 30 (but we recommend 10-20)
       min-complexity: 20
+
     gocritic:
       # Settings passed to gocritic.
       # The settings key is the name of a supported gocritic checker.
@@ -288,6 +301,7 @@ linters:
           # Whether to skip (*x).method() calls where x is a pointer receiver.
           # Default: true
           skipRecvDeref: false
+
     govet:
       # Enable all analyzers.
       # Default: false
@@ -303,13 +317,16 @@ linters:
           # Whether to be strict about shadowing; can be noisy.
           # Default: false
           strict: true
+
     inamedparam:
       # Skips check for interface methods with only a single parameter.
       # Default: false
       skip-single-param: true
+
     misspell:
       locale: UK
       mode: default
+
     mnd:
       # List of function patterns to exclude from analysis.
       # Values always ignored: `time.Date`,
@@ -334,35 +351,41 @@ linters:
         - cobra.MaximumNArgs
         - cobra.ExactArgs
         - cobra.RangeArgs
+
     nakedret:
       # Make an issue if func has more lines of code than this setting, and it has naked returns.
       # Default: 30
       max-func-lines: 0
+
     nolintlint:
       # Exclude following linters from requiring an explanation.
       # Default: []
-      allow-no-explanation: [funlen, gocognit, golines]
+      allow-no-explanation: [ funlen, gocognit, golines ]
       # Enable to require an explanation of nonzero length after each nolint directive.
       # Default: false
       require-explanation: true
       # Enable to require nolint directives to mention the specific linter being suppressed.
       # Default: false
       require-specific: true
+
     perfsprint:
       # Optimizes into strings concatenation.
       # Default: true
       strconcat: true
+
     reassign:
       # Patterns for global variable names that are checked for reassignment.
       # See https://github.com/curioswitch/go-reassign#usage
       # Default: ["EOF", "Err.*"]
       patterns:
         - ".*"
+
     rowserrcheck:
       # database/sql is always checked.
       # Default: []
       packages:
         - github.com/jmoiron/sqlx
+
     sloglint:
       # Enforce not using global loggers.
       # Values:
@@ -380,6 +403,7 @@ linters:
       # https://github.com/go-simpler/sloglint?tab=readme-ov-file#context-only
       # Default: ""
       context: scope
+
     staticcheck:
       # SAxxxx checks in https://staticcheck.dev/docs/configuration/options/#checks
       # Example (to disable some checks): [ "all", "-SA1000", "-SA1001"]
@@ -395,10 +419,12 @@ linters:
         # Omit embedded fields from selector expression.
         # https://staticcheck.dev/docs/checks/#QF1008
         - -QF1008
+
     usetesting:
       # Enable/disable `os.TempDir()` detections.
       # Default: false
       os-temp-dir: true
+
   exclusions:
     # Log a warning if an exclusion rule is unused.
     # Default: false
@@ -411,17 +437,17 @@ linters:
     # Excluding configuration per-path, per-linter, per-text and per-source.
     rules:
       - source: 'TODO'
-        linters: [godot]
+        linters: [ godot ]
       - text: 'should have a package comment'
-        linters: [revive]
+        linters: [ revive ]
       - text: 'exported \S+ \S+ should have comment( \(or a comment on this block\))? or be unexported'
-        linters: [revive]
+        linters: [ revive ]
       - text: 'package comment should be of the form ".+"'
         source: '// ?(nolint|TODO)'
-        linters: [revive]
+        linters: [ revive ]
       - text: 'comment on exported \S+ \S+ should be of the form ".+"'
         source: '// ?(nolint|TODO)'
-        linters: [revive, staticcheck]
+        linters: [ revive, staticcheck ]
       - path: '_test\.go'
         linters:
           - bodyclose
@@ -433,9 +459,9 @@ linters:
           - noctx
           - wrapcheck
       - text: "options.AndFrom is deprecated"
-        linters: [staticcheck]
+        linters: [ staticcheck ]
       - text: "The component config package has been deprecated and will be removed in a future release."
-        linters: [staticcheck]
+        linters: [ staticcheck ]
       - path: "cmd/"
         linters:
           - gochecknoinits

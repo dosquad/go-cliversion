@@ -1,6 +1,0 @@
-issues:
-  exclude-rules:
-    - path: '(const|version).go'
-      linters:
-        - gochecknoinits
-        - gochecknoglobals
