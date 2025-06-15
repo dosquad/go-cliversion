@@ -1,6 +1,7 @@
 package cliversion
 
 import (
+	"fmt"
 	"time"
 
 	"google.golang.org/protobuf/encoding/protojson"
@@ -22,22 +23,26 @@ func (v *VersionInfo) JSON() ([]byte, error) {
 
 // VersionString returns the version as a string, compatible with display in a cli tool.
 func (v *VersionInfo) VersionString() string {
-	if b := v.GetBld(); b != nil {
-		if g := v.GetGit(); g != nil {
-			return b.GetVersion() + " [" +
-				g.GetCommit() + "] (" +
-				b.GetDate().AsTime().Format(time.RFC3339) + ") <" +
-				b.GetMethod() + "> <" + g.GetRepo() + ">"
+	bld := v.GetBld()
+	git := v.GetGit()
+
+	if bld != nil {
+		dateStr := "()"
+		if bld.GetDate() != nil {
+			dateStr = "(" + bld.GetDate().AsTime().Format(time.RFC3339) + ")"
 		}
 
-		return b.GetVersion() + " [] (" +
-			b.GetDate().AsTime().Format(time.RFC3339) + ") <" +
-			b.GetMethod() + "> <>"
+		if git != nil {
+			return fmt.Sprintf("%s [%s] %s <%s> <%s>",
+				bld.GetVersion(), git.GetCommit(), dateStr, bld.GetMethod(), git.GetRepo())
+		}
+		return fmt.Sprintf("%s [] %s <%s> <>",
+			bld.GetVersion(), dateStr, bld.GetMethod())
 	}
 
-	if g := v.GetGit(); g != nil {
-		return g.GetTag() + " [" +
-			g.GetCommit() + "] () <> <" + g.GetRepo() + ">"
+	if git != nil {
+		return fmt.Sprintf("%s [%s] () <> <%s>",
+			git.GetTag(), git.GetCommit(), git.GetRepo())
 	}
 
 	return "v0.0.0+unknown [] () <> <>"
