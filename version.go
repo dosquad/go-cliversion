@@ -49,6 +49,8 @@ func (v *VersionInfo) VersionString() string {
 }
 
 // single-allocation for the version properties (for use with headers in displaying lists).
+//
+//nolint:gochecknoglobals // This map is a constant and is used to provide a consistent header format
 var versionHeaderMap = map[string]any{
 	"Build": map[string]any{
 		"Debug":     "Debug",

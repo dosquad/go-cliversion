@@ -8,6 +8,7 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
+//nolint:gochecknoglobals // These variables are set at compile time using the -ldflags option.
 var (
 	BuildDate      string
 	BuildDebug     string
