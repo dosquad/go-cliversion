@@ -1,52 +1,58 @@
 package cliversion
 
-// GetBuildDebug returns the versionInfo.GetBld().GetDebug() if versionInfo.GetBld() is not nil,
+import (
+	"encoding/json"
+	"fmt"
+	"time"
+)
+
+// GetBuildDebug returns the versionInfo.GetBuild().GetDebug() if versionInfo.GetBuild() is not nil,
 // otherwise it returns true.
 func GetBuildDebug(versionInfo *VersionInfo) bool {
-	if versionInfo.HasBld() {
-		return versionInfo.GetBld().GetDebug()
+	if versionInfo.HasBuild() {
+		return versionInfo.GetBuild().GetDebug()
 	}
 
 	return true
 }
 
-// GetBuildMethod returns the versionInfo.GetBld().GetMethod() if versionInfo.GetBld() is not nil,
+// GetBuildMethod returns the versionInfo.GetBuild().GetMethod() if versionInfo.GetBuild() is not nil,
 // otherwise it returns "not-set".
 func GetBuildMethod(versionInfo *VersionInfo) string {
-	if versionInfo.HasBld() {
-		return versionInfo.GetBld().GetMethod()
+	if versionInfo.HasBuild() {
+		return versionInfo.GetBuild().GetMethod()
 	}
 
 	return "not-set"
 }
 
-// GetBuildDate returns the versionInfo.GetBld().GetDate().AsTime().Format(timeLayout)
-// if versionInfo.GetBld() is not nil, otherwise it returns an empty string.
+// GetBuildDate returns the versionInfo.GetBuild().GetDate().AsTime().Format(timeLayout)
+// if versionInfo.GetBuild() is not nil, otherwise it returns an empty string.
 func GetBuildDate(versionInfo *VersionInfo, timeLayout string) string {
-	if versionInfo.HasBld() {
-		if versionInfo.GetBld().GetDate() != nil {
-			return versionInfo.GetBld().GetDate().AsTime().Format(timeLayout)
+	if versionInfo.HasBuild() {
+		if !versionInfo.GetBuild().GetDate().IsZero() {
+			return versionInfo.GetBuild().GetDate().Format(timeLayout)
 		}
 	}
 
 	return ""
 }
 
-// GetBuildVersion returns the versionInfo.GetBld().GetVersion()
-// if versionInfo.GetBld() is not nil, otherwise it returns an empty string.
+// GetBuildVersion returns the versionInfo.GetBuild().GetVersion()
+// if versionInfo.GetBuild() is not nil, otherwise it returns an empty string.
 func GetBuildVersion(versionInfo *VersionInfo) string {
-	if versionInfo.HasBld() {
-		return versionInfo.GetBld().GetVersion()
+	if versionInfo.HasBuild() {
+		return versionInfo.GetBuild().GetVersion()
 	}
 
 	return ""
 }
 
-// GetBuildGoVersion returns the versionInfo.GetBld().GetGoVersion()
-// if versionInfo.GetBld() is not nil, otherwise it returns an empty string.
+// GetBuildGoVersion returns the versionInfo.GetBuild().GetGoVersion()
+// if versionInfo.GetBuild() is not nil, otherwise it returns an empty string.
 func GetBuildGoVersion(versionInfo *VersionInfo) string {
-	if versionInfo.HasBld() {
-		return versionInfo.GetBld().GetGoVersion()
+	if versionInfo.HasBuild() {
+		return versionInfo.GetBuild().GetGoVersion()
 	}
 
 	return ""
@@ -108,4 +114,61 @@ func GetGitExactTag(versionInfo *VersionInfo) string {
 	}
 
 	return ""
+}
+
+// JSON returns the VersionInfo formatted into JSON format.
+func (v *VersionInfo) JSON() ([]byte, error) {
+	return json.Marshal(v)
+}
+
+// VersionString returns the version as a string, compatible with display in a cli tool.
+func (v *VersionInfo) VersionString() string {
+	bld := v.GetBuild()
+	git := v.GetGit()
+
+	if bld != nil {
+		dateStr := "()"
+		if !bld.GetDate().IsZero() {
+			dateStr = "(" + bld.GetDate().Format(time.RFC3339) + ")"
+		}
+
+		if git != nil {
+			return fmt.Sprintf("%s [%s] %s <%s> <%s>",
+				bld.GetVersion(), git.GetCommit(), dateStr, bld.GetMethod(), git.GetRepo())
+		}
+		return fmt.Sprintf("%s [] %s <%s> <>",
+			bld.GetVersion(), dateStr, bld.GetMethod())
+	}
+
+	if git != nil {
+		return fmt.Sprintf("%s [%s] () <> <%s>",
+			git.GetTag(), git.GetCommit(), git.GetRepo())
+	}
+
+	return "v0.0.0+unknown [] () <> <>"
+}
+
+// single-allocation for the version properties (for use with headers in displaying lists).
+//
+//nolint:gochecknoglobals // This map is a constant and is used to provide a consistent header format
+var versionHeaderMap = map[string]any{
+	"Build": map[string]any{
+		"Debug":     "Debug",
+		"Method":    "Method",
+		"Date":      "Date",
+		"Version":   "Version",
+		"GoVersion": "Go Version",
+	},
+	"Git": map[string]any{
+		"Repo":     "Repository",
+		"Slug":     "Repo Slug",
+		"Commit":   "Commit",
+		"Tag":      "Tag",
+		"ExactTag": "Exact Tag",
+	},
+}
+
+// VersionHeaderMap returns the versionHeaderMap.
+func VersionHeaderMap() map[string]any {
+	return versionHeaderMap
 }

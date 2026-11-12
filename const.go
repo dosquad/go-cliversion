@@ -4,8 +4,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
-	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 //nolint:gochecknoglobals // These variables are set at compile time using the -ldflags option.
@@ -23,15 +21,14 @@ var (
 	GitExactTag string
 )
 
-func stringToBool(in string) *bool {
+func stringToBool(in string) bool {
 	for _, v := range []string{
 		"true", "t",
 		"yes", "y",
 		"1", "on",
 	} {
 		if strings.EqualFold(in, v) {
-			b := true
-			return &b
+			return true
 		}
 	}
 
@@ -41,55 +38,53 @@ func stringToBool(in string) *bool {
 		"0", "off",
 	} {
 		if strings.EqualFold(in, v) {
-			b := false
-			return &b
+			return false
 		}
 	}
 
-	return nil
+	return false
 }
 
-func stringToTime(in string) *timestamppb.Timestamp {
+func stringToTime(in string) time.Time {
 	for _, f := range []string{
 		time.RFC1123, time.RFC1123Z,
 		time.RFC3339, time.DateTime,
 	} {
 		if ts, err := time.Parse(f, in); err == nil {
-			return timestamppb.New(ts)
+			return ts
 		}
 	}
 
 	if i, err := strconv.ParseInt(in, 10, 64); err == nil {
-		return timestamppb.New(time.Unix(i, 0))
+		return time.Unix(i, 0)
 	}
 
-	return timestamppb.New(time.Time{})
+	return time.Time{}
 }
 
-func stringToPtr(in string) *string {
-	if in != "" {
-		return &in
-	}
-
-	return nil
-}
+//nolint:gochecknoglobals // cached version info.
+var versionInfoCache *VersionInfo
 
 // Get returns the variables set at compile time.
 func Get() *VersionInfo {
-	return VersionInfo_builder{
-		Bld: BuildInfo_builder{
-			Date:      stringToTime(BuildDate),
-			Debug:     stringToBool(BuildDebug),
-			Method:    stringToPtr(BuildMethod),
-			Version:   stringToPtr(BuildVersion),
-			GoVersion: stringToPtr(BuildGoVersion),
-		}.Build(),
-		Git: GitInfo_builder{
-			Repo:     stringToPtr(GitRepo),
-			Slug:     stringToPtr(GitSlug),
-			Commit:   stringToPtr(GitCommit),
-			Tag:      stringToPtr(GitTag),
-			ExactTag: stringToPtr(GitExactTag),
-		}.Build(),
-	}.Build()
+	if versionInfoCache == nil {
+		versionInfoCache = &VersionInfo{
+			Build: &BuildInfo{
+				Date:      stringToTime(BuildDate),
+				Debug:     stringToBool(BuildDebug),
+				Method:    BuildMethod,
+				Version:   BuildVersion,
+				GoVersion: BuildGoVersion,
+			},
+			Git: &GitInfo{
+				Repo:     GitRepo,
+				Slug:     GitSlug,
+				Commit:   GitCommit,
+				Tag:      GitTag,
+				ExactTag: GitExactTag,
+			},
+		}
+	}
+
+	return versionInfoCache
 }

@@ -1,7 +1,7 @@
-edition = "2023";
+edition = "2024";
 
 package dosquad.cliversion;
-option go_package = "github.com/dosquad/go-cliversion;cliversion";
+option go_package = "github.com/dosquad/go-cliversion/versionpb;versionpb";
 
 import "google/protobuf/go_features.proto";
 option features.(pb.go).api_level = API_OPAQUE;
