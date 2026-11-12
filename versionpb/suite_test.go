@@ -1,4 +1,4 @@
-package cliversion_test
+package versionpb_test
 
 import (
 	"errors"
@@ -43,7 +43,7 @@ func main() {
 }`
 
 func readTestData(name string) string {
-	if out, err := os.ReadFile("testdata/" + name); err == nil {
+	if out, err := os.ReadFile("../testdata/" + name); err == nil {
 		return string(out)
 	}
 
@@ -89,7 +89,7 @@ func buildTestBinary(args []string) (string, error) {
 
 	if err := os.WriteFile(
 		filepath.Join(tempPath, "go.mod"),
-		[]byte(fmt.Sprintf(gomodTemplate, workDir())),
+		[]byte(fmt.Sprintf(gomodTemplate, workDir(".."))),
 		0o0600,
 	); err != nil {
 		return "", fmt.Errorf("unable to write temp go.mod: %w", err)
@@ -110,7 +110,8 @@ func buildTestBinary(args []string) (string, error) {
 	buf := &strings.Builder{}
 	// targetFile := filepath.Join(tempPath, "main")
 	{
-		buildArgs := []string{"run"}
+		buildArgs := make([]string, 0, len(args)+2)
+		buildArgs = append(buildArgs, "run")
 		buildArgs = append(buildArgs, args...)
 		buildArgs = append(buildArgs, "main.go")
 
