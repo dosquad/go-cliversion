@@ -1,6 +1,6 @@
 module github.com/dosquad/go-cliversion/versionpb
 
-go 1.25.0
+go 1.26.0
 
 require (
 	github.com/dosquad/go-cliversion v0.3.0
