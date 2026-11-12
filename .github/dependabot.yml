@@ -2,11 +2,13 @@ version: 2
 
 updates:
   - package-ecosystem: "gomod"
-    directory: "/"
+    directories:
+      - "./"
+      - "./versionpb"
+      - "./magefiles"
     schedule:
       interval: "weekly"
-
-  - package-ecosystem: "gomod"
-    directory: "/magefiles/"
-    schedule:
-      interval: "weekly"
+    groups:
+      gomod-dependencies:
+        patterns:
+          - "*"
