@@ -1,5 +1,5 @@
-github.com/dosquad/go-cliversion v0.3.0 h1:YQG2EOQX9dmfd/+4h3X+ee9nMPqbqxaHhsa/7IU6JRg=
-github.com/dosquad/go-cliversion v0.3.0/go.mod h1:Gliu0a5jfTOsxfdXoxhGz3bDHva5gMJPn/Bcuh94sTg=
+github.com/dosquad/go-cliversion v1.0.0 h1:OQI2huMT4T9tWITNS356ps4PBjc5nAqG4+/NLwE+UN0=
+github.com/dosquad/go-cliversion v1.0.0/go.mod h1:PEcxEKjypJ/cAdRcxuNMh95z0Az5QJPmmptJJJLhMkY=
 github.com/google/go-cmp v0.7.0 h1:wk8382ETsv4JYUZwIsn6YpYiWiBsYLSJiTsyBybVuN8=
 github.com/google/go-cmp v0.7.0/go.mod h1:pXiqmnSA92OHEEa9HXL2W4E7lf9JzCmGVUdgjX3N/iU=
 google.golang.org/protobuf v1.36.12 h1:pJOKDDOyeXErUroCihFAd5LQuwXBSpVnKGrj5o/fwxc=
